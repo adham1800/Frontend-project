@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, fetchUser } from "../store/authSlice";
+import { loginUser, fetchUser, clearError } from "../store/authSlice";
 import { Form, Button, Alert, Container } from "react-bootstrap";
 
 const Login = () => {
@@ -11,15 +11,18 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    dispatch(clearError());
 
-    await dispatch(
+    const result = await dispatch(
       loginUser({
         username: usernameRef.current.value,
         password: passRef.current.value,
       })
     );
 
-    dispatch(fetchUser());
+    if (result.type === loginUser.fulfilled.type) {
+      dispatch(fetchUser());
+    }
   };
 
   return (
