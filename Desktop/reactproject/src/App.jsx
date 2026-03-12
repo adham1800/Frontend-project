@@ -1,5 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
+import { AdminRoute } from "./components/AdminRoute";
 
 import Products from "./pages/Products";
 import ProductDetails from "./pages/ProductDetails";
@@ -19,8 +20,8 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails />} />
-          <Route path="/users" element={<Users />} />
-          <Route path="/users/:id" element={<UserDetails />} />
+          <Route path="/users" element={<AdminRoute><Users /></AdminRoute>} />
+          <Route path="/users/:id" element={<AdminRoute><UserDetails /></AdminRoute>} />
           <Route path="/carts" element={<Carts />} />
           <Route path="/carts/:id" element={<CartDetails />} />
           <Route path="/login" element={<Login />} />

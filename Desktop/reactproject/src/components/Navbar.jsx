@@ -7,7 +7,8 @@ import { logout } from "../store/authSlice";
 export default function Navbar() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.auth);
+  const { token, user } = useSelector((state) => state.auth);
+  const isAdmin = user && user.username === "admin";
 
   const handleLogout = () => {
     dispatch(logout());
@@ -33,9 +34,11 @@ export default function Navbar() {
               Products
             </Nav.Link>
 
-            <Nav.Link as={NavLink} to="/users">
-              Users
-            </Nav.Link>
+            {isAdmin && (
+              <Nav.Link as={NavLink} to="/users">
+                Users
+              </Nav.Link>
+            )}
 
             <Nav.Link as={NavLink} to="/carts">
               Carts

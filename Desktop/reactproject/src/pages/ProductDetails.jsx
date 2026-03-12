@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProduct } from "../store/productSlice";
+import { addToCart } from "../store/cartSlice";
 import { useParams } from "react-router-dom";
-import { Container } from "react-bootstrap";
+import { Container, Button } from "react-bootstrap";
 
 export const ProductDetails = () => {
   const { id } = useParams();
@@ -14,6 +15,12 @@ export const ProductDetails = () => {
       dispatch(getProduct(id));
     }
   }, [dispatch, id]);
+
+  const handleAddToCart = () => {
+    if (product) {
+      dispatch(addToCart(product));
+    }
+  };
 
   if (!product) {
     return (
@@ -35,6 +42,12 @@ export const ProductDetails = () => {
           <p className="mt-3">{product.description}</p>
           {product.rating && <p><strong>Rating:</strong> {product.rating}/5</p>}
           {product.stock !== undefined && <p><strong>Stock:</strong> {product.stock}</p>}
+          <Button 
+            variant="success" 
+            onClick={handleAddToCart} 
+            className="mt-3">
+            Add to Cart
+          </Button>
         </div>
       </div>
     </Container>
